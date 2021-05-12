@@ -1,7 +1,7 @@
 #pragma once
 #include "utils.h"
 
-inline void readBinary(uchar* buffer, size_t size) {
+void readBinary(uchar* buffer, size_t size) {
     fread(buffer, sizeof(uchar), size, f);
 
     // Nếu người dùng chọn big endian thì đảo ngược lại
@@ -28,7 +28,7 @@ void docSoNguyenQuaK() {
     // Do little endian nên byte đầu nằm ở cuối buffer
     char first = buffer[kt - 1];
     // Lấy bit dấu
-    char neg = first & 0b1000000;
+    char neg = (first & 0b1000000) >> 7;
 
     if (neg) {
         n = -1;
@@ -55,7 +55,7 @@ void docSoNguyenBu2() {
     // Do little endian nên byte đầu nằm ở cuối buffer
     char first = buffer[kt - 1];
     // Lấy bit dấu
-    char neg = first & 0b1000000;
+    char neg = (first & 0b10000000) >> 7;
 
     if (neg) {
         n = -1;
@@ -74,7 +74,7 @@ void docSoThuc() {
 
     size_t kt;
     do {
-        cout << "Nhap kich thuoc so nguyen (byte) (4 hoac 8): ";
+        cout << "Nhap kich thuoc so thuc (byte) (4 hoac 8): ";
         cin >> kt;
 
         if (kt != 4 && kt != 8) {
@@ -113,4 +113,8 @@ void docChuoiASCII() {
     cout << "Chuoi doc duoc: " << buffer << endl;
 
     delete[] buffer;
+}
+
+void docChuoiUTF16() {
+    cout << "Chua duoc implement" << endl;
 }

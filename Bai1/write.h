@@ -122,28 +122,5 @@ void nhapChuoiASCII() {
 }
 
 void nhapChuoiUTF16() {
-    _setmode(_fileno(stdin), _O_U16TEXT);
-    _setmode(_fileno(stdout), _O_U16TEXT);
-
-    wstring s;
-    size_t size;
-
-    wcout << L"Nhập một chuỗi kí tự UTF16: ";
-    getline(wcin, s);
-
-    size = wcslen(s.c_str()) + 1;
-    
-    wchar_t* buffer = new wchar_t[size];
-    memcpy(buffer, s.c_str(), size);
-
-    char e = chooseEndianess();
-    if (e == B) {
-        reverseEndianess(buffer, size);
-    }
-
-    fwrite(buffer, sizeof(uchar), size, f);
-
-    delete[] buffer;
-    _setmode(_fileno(stdin), _O_TEXT);
-    _setmode(_fileno(stdout), _O_TEXT);
+    cout << "Chua duoc implement" << endl;
 }

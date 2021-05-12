@@ -4,7 +4,7 @@
 #define LINE "------------------------------\n"
 FILE* f = nullptr;
 
-#define FILENAME "test.bin"
+char* FILENAME;
 
 void showReadMenu() {
     fopen_s(&f, FILENAME, "rb");
@@ -42,7 +42,7 @@ void showReadMenu() {
         docChuoiASCII();
     }
     else if (choice == 5) {
-        
+        docChuoiUTF16();
     }
     else {
         cout << "Nhap khong dung lua chon!" << endl;
@@ -92,9 +92,13 @@ void showWriteMenu() {
 }
 
 int main() {
+    FILENAME = new char[255];
+    
+    cout << "Nhap ten file can xu ly: ";
+    cin.getline(FILENAME, 255);
+
     // Xoá nội dung file
     bool erase;
-
     cout << "Ban co muon xoa noi dung file " << FILENAME << "? (nhap 1 hoac 0): ";
     cin >> erase;
 
@@ -103,36 +107,44 @@ int main() {
         fclose(f);
     }
 
-    do {
-        system("cls");
-        cout << "Do an mon hoc: He thong may tinh" << endl;
-        cout << "" << endl;
-        cout << "" << endl;
-        cout << LINE;
+    try {
+        do {
+            system("cls");
+            cout << "Do an mon hoc: He thong may tinh" << endl;
+            cout << "" << endl;
+            cout << "" << endl;
+            cout << LINE;
 
-        cout << "1. Doc" << endl;
-        cout << "2. Ghi" << endl;
-        cout << "0. Thoat" << endl;
-        cout << "Lua chon: ";
+            cout << "1. Doc" << endl;
+            cout << "2. Ghi" << endl;
+            cout << "0. Thoat" << endl;
+            cout << "Lua chon: ";
 
-        int rw;
-        cin >> rw;
+            int rw;
+            cin >> rw;
 
-        if (rw == 0) {
-            break;
-        }
-        else if (rw == 1) {
-            showReadMenu();
-        }
-        else if (rw == 2) {
-            showWriteMenu();
-        }
-        else {
-            cout << "Nhap khong dung lua chon!" << endl;
-            system("pause");
+            if (rw == 0) {
+                break;
+            }
+            else if (rw == 1) {
+                showReadMenu();
+            }
+            else if (rw == 2) {
+                showWriteMenu();
+            }
+            else {
+                cout << "Nhap khong dung lua chon!" << endl;
+                system("pause");
+                continue;
+            }
             continue;
-        }
-        continue;
-    } while (true);
-    
+        } while (true);
+    }
+    catch (exception& e) {
+        cout << "Da co loi xay ra trong khi thuc hien chuong trinh: " << e.what() << endl;
+        cout << "Chuong trinh se thoat." << endl;
+        system("pause");
+    }
+
+    delete[] FILENAME;
 }

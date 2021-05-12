@@ -5,17 +5,20 @@
 #include <io.h>
 #include <fcntl.h>
 #include <exception>
+#include <Windows.h>
+
 using namespace std;
 
 #define L 'L'
 #define B 'B'
-using uchar = unsigned char;
+
+typedef unsigned char uchar;
 
 extern FILE* f;
 
 // Hàm để đảo ngược môt mảng
-template<class T>
-static void reverseEndianess(T* arr, size_t n) {
+
+static void reverseEndianess(uchar* arr, size_t n) {
     int i = 0;
     int j = n - 1;
     while (i < j) {
