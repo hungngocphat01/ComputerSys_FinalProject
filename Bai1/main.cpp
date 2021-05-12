@@ -7,7 +7,7 @@ FILE* f = nullptr;
 #define FILENAME "test.bin"
 
 void showReadMenu() {
-    f = fopen(FILENAME, "rb");
+    fopen_s(&f, FILENAME, "rb");
 
     cout << LINE;
     cout << "1. So nguyen qua K kich thuoc N byte." << endl;
@@ -23,8 +23,12 @@ void showReadMenu() {
     int offset;
     cin >> offset;
 
-    fseek(f, offset, SEEK_SET);
+    if (f != nullptr)
+        fseek(f, offset, SEEK_SET);
+    else
+        throw runtime_error("File chua duoc mo!");
 
+    cout << LINE;
     if (choice == 1) {
         docSoNguyenQuaK();
     }
@@ -45,11 +49,14 @@ void showReadMenu() {
         system("pause");
     }
 
-    fclose(f);
+    if (f != nullptr)
+        fclose(f);
+    
+    system("pause");
 }
 
 void showWriteMenu() {
-    f = fopen(FILENAME, "ab");
+    fopen_s(&f, FILENAME, "ab");
 
     cout << LINE;
     cout << "1. So nguyen qua K kich thuoc N byte." << endl;
@@ -61,6 +68,7 @@ void showWriteMenu() {
     int choice;
     cin >> choice;
 
+    cout << LINE;
     if (choice == 1) {
         nhapSoNguyenQuaK();
     }
@@ -74,7 +82,7 @@ void showWriteMenu() {
         nhapChuoiASCII();
     }
     else if (choice == 5) {
-        
+        nhapChuoiUTF16();
     }
     else {
         cout << "Nhap khong dung lua chon!" << endl;
@@ -84,12 +92,16 @@ void showWriteMenu() {
 }
 
 int main() {
-    system("alias cls=clear");
-    system("alias pause=\"read -p 'Press ENTER...'\"");
-    
     // Xoá nội dung file
-    f = fopen(FILENAME, "wb");
-    fclose(f);
+    bool erase;
+
+    cout << "Ban co muon xoa noi dung file " << FILENAME << "? (nhap 1 hoac 0): ";
+    cin >> erase;
+
+    if (erase) {
+        fopen_s(&f, FILENAME, "wb");
+        fclose(f);
+    }
 
     do {
         system("cls");

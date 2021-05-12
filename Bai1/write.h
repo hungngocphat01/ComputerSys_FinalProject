@@ -107,7 +107,8 @@ void nhapChuoiASCII() {
     string s;
     size_t size;
     cout << "Nhap mot chuoi ki tu ASCII: ";
-    fflush(stdin);
+    
+    cin.ignore();
     getline(cin, s);
 
     size = s.length() + 1;
@@ -116,4 +117,33 @@ void nhapChuoiASCII() {
     memcpy(buffer, s.c_str(), size);
 
     writeBinary(buffer, size);
+
+    delete[] buffer;
+}
+
+void nhapChuoiUTF16() {
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    _setmode(_fileno(stdout), _O_U16TEXT);
+
+    wstring s;
+    size_t size;
+
+    wcout << L"Nhập một chuỗi kí tự UTF16: ";
+    getline(wcin, s);
+
+    size = wcslen(s.c_str()) + 1;
+    
+    wchar_t* buffer = new wchar_t[size];
+    memcpy(buffer, s.c_str(), size);
+
+    char e = chooseEndianess();
+    if (e == B) {
+        reverseEndianess(buffer, size);
+    }
+
+    fwrite(buffer, sizeof(uchar), size, f);
+
+    delete[] buffer;
+    _setmode(_fileno(stdin), _O_TEXT);
+    _setmode(_fileno(stdout), _O_TEXT);
 }

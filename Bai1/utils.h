@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include <io.h>
+#include <fcntl.h>
 #include <exception>
 using namespace std;
 
@@ -12,7 +14,8 @@ using uchar = unsigned char;
 extern FILE* f;
 
 // Hàm để đảo ngược môt mảng
-static void reverseEndianess(uchar* arr, size_t n) {
+template<class T>
+static void reverseEndianess(T* arr, size_t n) {
     int i = 0;
     int j = n - 1;
     while (i < j) {

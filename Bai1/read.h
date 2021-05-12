@@ -11,6 +11,10 @@ inline void readBinary(uchar* buffer, size_t size) {
 }
 
 void docSoNguyenQuaK() {
+    int k;
+    cout << "Nhap K: ";
+    cin >> k;
+    
     size_t kt;
     cout << "Nhap kich thuoc (so byte): ";
     cin >> kt;
@@ -18,10 +22,21 @@ void docSoNguyenQuaK() {
     uchar* buffer = new uchar[kt];
     readBinary(buffer, kt);
 
-    long long n;
+    long long n = 0;
+
+    // Lấy ra byte đầu tiên
+    // Do little endian nên byte đầu nằm ở cuối buffer
+    char first = buffer[kt - 1];
+    // Lấy bit dấu
+    char neg = first & 0b1000000;
+
+    if (neg) {
+        n = -1;
+    }
+
     memcpy((uchar*)(&n), buffer, kt);
 
-    cout << "So nguyen doc duoc: " << n << endl;
+    cout << "So nguyen doc duoc: " << n - k << endl;
 
     delete[] buffer;
 }
@@ -34,7 +49,18 @@ void docSoNguyenBu2() {
     uchar* buffer = new uchar[kt];
     readBinary(buffer, kt);
 
-    long long n;
+    long long n = 0;
+
+    // Lấy ra byte đầu tiên
+    // Do little endian nên byte đầu nằm ở cuối buffer
+    char first = buffer[kt - 1];
+    // Lấy bit dấu
+    char neg = first & 0b1000000;
+
+    if (neg) {
+        n = -1;
+    }
+
     memcpy((uchar*)(&n), buffer, kt);
 
     cout << "So nguyen doc duoc: " << n << endl;
@@ -75,5 +101,16 @@ void docSoThuc() {
 }
 
 void docChuoiASCII() {
+    size_t n;
+    cout << "Nhap kich thuoc chuoi (khong bao gom ki tu \\0): ";
+    cin >> n;
+    n++;
 
+    uchar* buffer = new uchar[n];
+
+    readBinary(buffer, n);
+
+    cout << "Chuoi doc duoc: " << buffer << endl;
+
+    delete[] buffer;
 }
