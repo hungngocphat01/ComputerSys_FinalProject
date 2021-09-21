@@ -1,3 +1,1 @@
-### Template báo cáo 
-
-Template latex, có hổ trộ tiếng việt
+Mã nguồn TeX của báo cáo đồ án. Có đính kèm file PDF đã compile sẵn.
