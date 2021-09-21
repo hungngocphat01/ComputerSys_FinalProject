@@ -7,6 +7,8 @@ Repository này gồm
 - Mã nguồn Assembly của bài 2.
 - Báo cáo đồ án (mã nguồn TeX và PDF).
 
+Thực hiện tháng 5 năm 2021.
+
 ## Đề 
 ### Câu 1
 Viết chương trình C tạo và lưu nối tiếp vào một file nhị phân các dữ liệu mà người dùng 
